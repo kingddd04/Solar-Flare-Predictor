@@ -1,0 +1,32 @@
+[
+    {
+        "time_tag": "2026-02-09T00:00:00Z",
+        "satellite": 18,
+        "background": 1.7613829707367281e-06
+    },
+    {
+        "time_tag": "2026-02-10T00:00:00Z",
+        "satellite": 18,
+        "background": 1.1558242363207683e-06
+    },
+    {
+        "time_tag": "2026-02-11T00:00:00Z",
+        "satellite": 18,
+        "background": 1.1605946686662112e-06
+    },
+    {
+        "time_tag": "2026-02-12T00:00:00Z",
+        "satellite": 18,
+        "background": 5.714421691986141e-07
+    },
+    {
+        "time_tag": "2026-02-13T00:00:00Z",
+        "satellite": 18,
+        "background": 4.4652127636860923e-07
+    },
+    {
+        "time_tag": "2026-02-14T00:00:00Z",
+        "satellite": 18,
+        "background": 4.4516328117083505e-07
+    }
+]
