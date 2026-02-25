@@ -43,5 +43,3 @@ class Inference_Manager:
         flare_class = SolarFlareClassifier.get_flare_class(y_real)
 
         print("Inference result:", y_real, "Solar Class:", flare_class)
-
-
