@@ -8,7 +8,7 @@ class Xray_preprocessor:
         self.conf = conf
         
     def preprocess_xray(self):
-        # Load JSON into DataFrame
+        # Load X-ray JSON data
         filepath = os.path.join(self.conf.data_dir,"xrays-7-day.json")
 
         with open(filepath, 'r') as f:
@@ -23,6 +23,6 @@ class Xray_preprocessor:
             values="observed_flux"
         )
 
-        print("->X Rays 7days preprocessed")
+        print("X-ray preprocessing complete")
 
         return df

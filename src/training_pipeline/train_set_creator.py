@@ -5,25 +5,15 @@ import numpy as np
 
 class TrainSetCreator:
     """
-    Carica il CSV sfp_dataset e costruisce le sequenze di training.
-
-    Per ogni campione i:
-      - x[i] : finestra delle prime 180 righe (minuti) a partire da i,
-                     tutte le colonne feature  →  shape (180, n_features)
-      - y[i] : valore della colonna '0.1-0.8nm' al minuto i+90
-                     (il target è il valore XRSB a 90 minuti nel futuro)
-
-    Entrambe le liste contengono array con una dimensione batch aggiunta:
-      x[i].shape  → (1, 180, n_features)
-      y[i].shape  → (1, 1)
+    Build training feature windows and future targets from the CSV dataset.
     """
 
-    # Colonne da escludere dalle feature
+    # Define excluded columns
     DROP_COLS  = ["time_tag", "0.1-0.8nm"]
     TARGET_COL = "0.1-0.8nm"
 
-    WINDOW  = 180   # lunghezza sequenza di input (minuti)
-    HORIZON = 90    # minuti nel futuro per il target
+    WINDOW  = 180   # Set input window length
+    HORIZON = 90    # Set target horizon
 
     def __init__(self,  csv_path: str = None):
         self.csv_path = csv_path
@@ -31,13 +21,13 @@ class TrainSetCreator:
         self.y: list[np.ndarray] = []
 
     def print_shapes(self):
-  
-        # Shape complessive
-        print(f"Numer of entries: {len(self.x)}")
+   
+        # Print total entries
+        print(f"Number of entries: {len(self.x)}")
         
-        # Shape del primo elemento (tutti gli altri sono identici)
-        print(f"Shape x: {self.x.shape}")  # (1, 180, n_features)
-        print(f"Shape y: {self.y.shape}")  # (1, 1)
+        # Print dataset shapes
+        print(f"Shape x: {self.x.shape}")  # Report feature shape
+        print(f"Shape y: {self.y.shape}")  # Report target shape
 
 
 

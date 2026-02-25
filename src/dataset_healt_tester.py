@@ -10,3 +10,6 @@ df = pd.read_csv(dataset_path)
 
 print(df.shape)
 print(df.isna().sum())
+
+duplicate_dates = df[df["time_tag"].duplicated(keep=False)] 
+print(f"\nNumber of duplicated time_tag entries: {duplicate_dates.shape[0]}")

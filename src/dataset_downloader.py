@@ -6,7 +6,7 @@ from config import Config
 class DatasetDownloader:
     def __init__(self):
         self.conf = Config()
-        # Ensure folder exists
+        # Create data directory
         os.makedirs(self.conf.data_dir, exist_ok=True)
 
     def datasetDownload(self):
@@ -20,7 +20,7 @@ class DatasetDownloader:
             with open(filepath, "w") as f:
                 json.dump(data, f, indent=4)
 
-            print(f"Saved to {filename}, to {filepath}")
+            print(f"Saved dataset file: {filename} at {filepath}")
             
 downloader = DatasetDownloader()
 downloader.datasetDownload()

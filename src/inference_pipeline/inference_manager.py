@@ -5,38 +5,43 @@ from .inference_scaler import InferenceScaler
 from .inference_dataset_extractor import InferenceDatasetExtractor
 from .solar_flare_classifier import SolarFlareClassifier
 
+
 class Inference_Manager:
+
     def __init__(self):
+        # Load configuration
         conf = Config()
-        model_p = conf.model_path
-        model_d = conf.model_dir
+
+        # Resolve paths
+        model_dir = conf.model_dir
+        model_path = conf.model_path
         dataset_path = conf.dataset_path
-        sfp = SolarFlarePredictor(model_save_folder=model_p)
-        sfp.load()
 
-        datas_extr = InferenceDatasetExtractor(dataset_path)
-        x_imput = datas_extr.create_inference_set()
+        # Load trained model
+        predictor = SolarFlarePredictor(model_save_folder=model_path)
+        predictor.load()
 
-        inf_scaler = InferenceScaler()
-        inf_scaler.load(model_d)
-        scaled_x = inf_scaler.scale_inference_label(x_imput)
-        scaled_x_batched = scaled_x[np.newaxis, ...]
+        # Extract last 180 samples for inference
+        extractor = InferenceDatasetExtractor(dataset_path)
+        x_input = extractor.create_inference_set()   # shape (180, n_features)
 
+        # Load scalers and scale input
+        scaler = InferenceScaler()
+        scaler.load(model_dir)
+        x_scaled = scaler.scale_inference_label(x_input)
 
-        predicted_y = sfp.predict_weather(scaled_x_batched)
+        # Add batch dimension: (1, 180, n_features)
+        x_scaled_batched = x_scaled[np.newaxis, ...]
 
-        descaled_y = inf_scaler.decode_prediction(predicted_y)
+        # Predict scaled output
+        y_scaled_pred = predictor.predict_weather(x_scaled_batched)
 
-        solar_class = SolarFlareClassifier.get_flare_class(descaled_y)
+        # Decode prediction back to real flux
+        y_real = scaler.decode_prediction(y_scaled_pred)
 
-        print("lolll " ,descaled_y, "Solar_Class :", solar_class)
+        # Convert flux to NOAA class
+        flare_class = SolarFlareClassifier.get_flare_class(y_real)
 
-
-
-
-
-        
-
-
+        print("Inference result:", y_real, "Solar Class:", flare_class)
 
 
