@@ -29,14 +29,13 @@ class Inference_Manager:
 
         solar_class = SolarFlareClassifier.get_flare_class(descaled_y)
 
-        print("lolll " ,descaled_y, "Solar_Class :", solar_class)
+        print("Inference result:", descaled_y, "Solar_Class:", solar_class)
 
 
 
 
 
         
-
 
 
 

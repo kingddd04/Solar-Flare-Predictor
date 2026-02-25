@@ -25,7 +25,7 @@ class InferenceDatasetExtractor:
 
         df = pd.read_csv(self.csv_path)
 
-        # Select only feature columns (exclude time_tag and target)
+        # Select feature columns
         feature_cols = [c for c in df.columns if c not in self.DROP_COLS]
 
         X = df[feature_cols].values.astype(np.float32)
@@ -35,5 +35,5 @@ class InferenceDatasetExtractor:
                 f"Dataset too small: requires at least 180 rows, found {len(X)}"
             )
 
-        # Return only the last 180 samples
+        # Return latest 180 rows
         return X[-180:]

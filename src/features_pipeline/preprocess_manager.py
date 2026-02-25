@@ -37,13 +37,13 @@ class PreprocesserManager:
 
     def save_and_update_dataset(self, new_datas):
         """
-        Save the unified dataset to disk.
-        If the dataset already exists, append new rows without duplicates.
+        Save the merged dataset to disk.
+        Merge with existing data when the dataset file is present.
         """
         dataset_path = os.path.join(self.conf.data_dir, self.conf.dataset_name)
 
         if os.path.isfile(dataset_path):
-            print("Dataset found — updating it")
+            print("Dataset found; updating records")
             old_df = pd.read_csv(dataset_path, index_col="time_tag", parse_dates=["time_tag"])
 
             combined = old_df.merge(new_datas, on="time_tag", how="outer")
@@ -51,6 +51,6 @@ class PreprocesserManager:
             combined.to_csv(dataset_path, index=True)
 
         else:
-            print("Dataset not found — creating a new one")
+            print("Dataset not found; creating file")
             new_datas.to_csv(dataset_path, index=True)
-            print("Dataset created successfully")
+            print("Dataset creation complete")

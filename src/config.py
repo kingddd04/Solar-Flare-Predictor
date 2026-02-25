@@ -2,10 +2,10 @@ import os
 
 class Config:
     def __init__(self):
-        # Go one folder up from the current working directory
+        # Resolve project root
         self.root_dir = os.path.dirname(os.getcwd())
 
-        # Build the data directory inside that parent folder
+        # Build data directory path
         self.data_dir = os.path.join(self.root_dir, "datas")
 
         self.model_dir = os.path.join(self.root_dir, "ai_model")
@@ -16,7 +16,7 @@ class Config:
 
         self.dataset_path = os.path.join(self.data_dir,self.dataset_name)
 
-        # URLs for datasets
+        # Define NOAA dataset URLs
         self.dataset_urls = [
             "https://services.swpc.noaa.gov/json/goes/primary/xrays-7-day.json",
             "https://services.swpc.noaa.gov/json/goes/primary/euvs-7-day.json",

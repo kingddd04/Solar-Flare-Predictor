@@ -25,7 +25,7 @@ class SolarFlareClassifier:
         xray_flux = float(xray_flux)
 
 
-        # NOAA classification based on order of magnitude
+        # Map flux to NOAA class
         if xray_flux < 1e-7:
             letter = "A"
             multiplier = xray_flux / 1e-8
@@ -39,7 +39,7 @@ class SolarFlareClassifier:
             letter = "M"
             multiplier = xray_flux / 1e-5
         else:
-            # X-class flares can exceed 9.9 (e.g., the famous X28 event in 2003)
+            # Handle large X-class values
             letter = "X"
             multiplier = xray_flux / 1e-4
 

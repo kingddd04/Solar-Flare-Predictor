@@ -20,4 +20,4 @@ class DatasetDownloader:
             with open(filepath, "w") as f:
                 json.dump(data, f, indent=4)
 
-            print(f"Saved to {filename}, to {filepath}")
+            print(f"Saved dataset file: {filename} at {filepath}")
