@@ -1,32 +1,32 @@
 [
     {
-        "time_tag": "2026-02-10T00:00:00Z",
+        "time_tag": "2026-02-17T00:00:00Z",
         "satellite": 18,
-        "background": 1.1558242363207683e-06
+        "background": 3.92390186002937e-07
     },
     {
-        "time_tag": "2026-02-11T00:00:00Z",
+        "time_tag": "2026-02-18T00:00:00Z",
         "satellite": 18,
-        "background": 1.1605946686662112e-06
+        "background": 4.081238676197548e-07
     },
     {
-        "time_tag": "2026-02-12T00:00:00Z",
+        "time_tag": "2026-02-19T00:00:00Z",
         "satellite": 18,
-        "background": 5.714421691986141e-07
+        "background": 3.838923381257094e-07
     },
     {
-        "time_tag": "2026-02-13T00:00:00Z",
+        "time_tag": "2026-02-20T00:00:00Z",
         "satellite": 18,
-        "background": 4.4652127636860923e-07
+        "background": 3.685296573981607e-07
     },
     {
-        "time_tag": "2026-02-14T00:00:00Z",
+        "time_tag": "2026-02-21T00:00:00Z",
         "satellite": 18,
-        "background": 4.4516328117083505e-07
+        "background": 3.1357428701047256e-07
     },
     {
-        "time_tag": "2026-02-15T00:00:00Z",
+        "time_tag": "2026-02-22T00:00:00Z",
         "satellite": 18,
-        "background": 3.746156991724092e-07
+        "background": 3.084763207539254e-07
     }
 ]

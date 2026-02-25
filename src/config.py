@@ -8,7 +8,13 @@ class Config:
         # Build the data directory inside that parent folder
         self.data_dir = os.path.join(self.root_dir, "datas")
 
+        self.model_dir = os.path.join(self.root_dir, "ai_model")
+
         self.dataset_name = "sfp_dataset.csv"
+
+        self.model_path = os.path.join(self.model_dir ,"sfp_lstm.keras")
+
+        self.dataset_path = os.path.join(self.data_dir,self.dataset_name)
 
         # URLs for datasets
         self.dataset_urls = [
