@@ -1,3 +1,5 @@
+"""Preprocess X-ray time-series data for model features."""
+
 from config import Config
 import pandas as pd
 import os
@@ -23,6 +25,6 @@ class Xray_preprocessor:
             values="observed_flux"
         )
 
-        print("->X Rays 7days preprocessed")
+        print("-> X-ray 7-day data preprocessed")
 
         return df

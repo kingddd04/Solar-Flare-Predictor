@@ -1,3 +1,5 @@
+"""Scale training and inference tensors for the forecasting model."""
+
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import joblib

@@ -1,3 +1,5 @@
+"""Load and persist pipeline state metadata."""
+
 import os
 import json
 from config import Config
@@ -20,7 +22,7 @@ class State_Manager:
             } 
         with open(self.state_filepath, "w") as f: 
             json.dump(state, f)
-        print("State saved to : ", self.state_filepath)
+        print("State saved to:", self.state_filepath)
 
 
 s = State_Manager()
@@ -28,4 +30,3 @@ s.save_state()
 
 
         
-

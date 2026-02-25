@@ -1,3 +1,5 @@
+"""Project-wide path and dataset configuration."""
+
 import os
 
 class Config:

@@ -1,3 +1,5 @@
+"""Run end-to-end inference and print the predicted flare class."""
+
 import numpy as np
 from config import Config
 from .solar_flare_predictor import SolarFlarePredictor
@@ -8,35 +10,34 @@ from .solar_flare_classifier import SolarFlareClassifier
 class Inference_Manager:
     def __init__(self):
         conf = Config()
-        model_p = conf.model_path
-        model_d = conf.model_dir
+        model_path = conf.model_path
+        model_dir = conf.model_dir
         dataset_path = conf.dataset_path
-        sfp = SolarFlarePredictor(model_save_folder=model_p)
-        sfp.load()
+        predictor = SolarFlarePredictor(model_save_folder=model_path)
+        predictor.load()
 
-        datas_extr = InferenceDatasetExtractor(dataset_path)
-        x_imput = datas_extr.create_inference_set()
+        dataset_extractor = InferenceDatasetExtractor(dataset_path)
+        inference_input = dataset_extractor.create_inference_set()
 
-        inf_scaler = InferenceScaler()
-        inf_scaler.load(model_d)
-        scaled_x = inf_scaler.scale_inference_label(x_imput)
-        scaled_x_batched = scaled_x[np.newaxis, ...]
+        inference_scaler = InferenceScaler()
+        inference_scaler.load(model_dir)
+        scaled_x = inference_scaler.scale_inference_label(inference_input)
+        batched_scaled_x = scaled_x[np.newaxis, ...]
 
 
-        predicted_y = sfp.predict_weather(scaled_x_batched)
+        predicted_y = predictor.predict_weather(batched_scaled_x)
 
-        descaled_y = inf_scaler.decode_prediction(predicted_y)
+        decoded_y = inference_scaler.decode_prediction(predicted_y)
 
-        solar_class = SolarFlareClassifier.get_flare_class(descaled_y)
+        solar_class = SolarFlareClassifier.get_flare_class(decoded_y)
 
-        print("lolll " ,descaled_y, "Solar_Class :", solar_class)
+        print("Predicted X-ray flux:", decoded_y, "Solar class:", solar_class)
 
 
 
 
 
         
-
 
 
 

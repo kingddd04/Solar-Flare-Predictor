@@ -1,3 +1,5 @@
+"""Download NOAA JSON datasets into the local data folder."""
+
 import os
 import requests
 import json
@@ -20,7 +22,7 @@ class DatasetDownloader:
             with open(filepath, "w") as f:
                 json.dump(data, f, indent=4)
 
-            print(f"Saved to {filename}, to {filepath}")
+            print(f"Saved {filename} to {filepath}")
             
 downloader = DatasetDownloader()
 downloader.datasetDownload()

@@ -1,3 +1,5 @@
+"""Extract the latest fixed-size window for live inference."""
+
 import os
 import pandas as pd
 import numpy as np

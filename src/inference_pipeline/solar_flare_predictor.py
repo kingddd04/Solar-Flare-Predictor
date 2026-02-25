@@ -1,3 +1,5 @@
+"""Define and load the LSTM model used for inference."""
+
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
 from tensorflow.keras.optimizers import Adam
@@ -69,4 +71,3 @@ class SolarFlarePredictor:
                 
         return scaled_prediction
     
-

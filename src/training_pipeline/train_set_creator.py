@@ -1,3 +1,5 @@
+"""Create sequential training samples from the preprocessed CSV dataset."""
+
 import os
 import pandas as pd
 import numpy as np
@@ -33,7 +35,7 @@ class TrainSetCreator:
     def print_shapes(self):
   
         # Shape complessive
-        print(f"Numer of entries: {len(self.x)}")
+        print(f"Number of entries: {len(self.x)}")
         
         # Shape del primo elemento (tutti gli altri sono identici)
         print(f"Shape x: {self.x.shape}")  # (1, 180, n_features)

@@ -1,3 +1,5 @@
+"""Quick checks for generated training dataset shape and null values."""
+
 from config import Config
 import os
 import pandas as pd

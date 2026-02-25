@@ -1,3 +1,5 @@
+"""Scale inference features and decode model predictions."""
+
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import joblib

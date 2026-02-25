@@ -1,3 +1,5 @@
+"""Compute background X-ray flux features from short-cadence measurements."""
+
 import pandas as pd
 import os 
 import json
@@ -35,5 +37,5 @@ class Xraybg_preprocessor:
         xray7daybg = background_flux.rolling(window=180, center=False, min_periods=1).mean()
         xray7daybg = xray7daybg.rename("x_ray_bg")
 
-        print("->X Ray Background Preproccessed!")
+        print("-> X-ray background preprocessed")
         return xray7daybg

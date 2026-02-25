@@ -1,3 +1,5 @@
+"""Coordinate downloads and preprocessing for feature dataset updates."""
+
 from .xray_preprocessor import Xray_preprocessor
 from .uv_preprocessor import UvPreprocessor
 from .xraybg_preprocessor import Xraybg_preprocessor
@@ -22,13 +24,13 @@ class PreprocesserManager:
 
 
     def merge_preprocessed(self):    
-        xray_Preproc = Xray_preprocessor(self.conf)
-        uv_Preproc = UvPreprocessor(self.conf)
-        xraybc_Preproc = Xraybg_preprocessor(self.conf)
+        xray_preprocessor = Xray_preprocessor(self.conf)
+        uv_preprocessor = UvPreprocessor(self.conf)
+        xraybg_preprocessor = Xraybg_preprocessor(self.conf)
 
-        xray_7d_df = xray_Preproc.preprocess_xray()
-        uv_7d_df = uv_Preproc.preprocess_uv()
-        xraybg_7d_df = xraybc_Preproc.preprocess_xraybg(xray_7d_df)
+        xray_7d_df = xray_preprocessor.preprocess_xray()
+        uv_7d_df = uv_preprocessor.preprocess_uv()
+        xraybg_7d_df = xraybg_preprocessor.preprocess_xraybg(xray_7d_df)
 
         unified_df = xray_7d_df.merge(xraybg_7d_df, on="time_tag", how="inner").merge(uv_7d_df, on="time_tag", how="inner")
 

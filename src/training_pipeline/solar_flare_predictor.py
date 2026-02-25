@@ -1,3 +1,5 @@
+"""Define and train the LSTM model for solar flare forecasting."""
+
 from tensorflow.keras.models import Sequential, load_model
 from tensorflow.keras.layers import LSTM, Dense, Dropout, Input
 from tensorflow.keras.optimizers import Adam
@@ -103,4 +105,3 @@ class SolarFlarePredictor:
                 
         return real_xray_flux[0][0]
     
-

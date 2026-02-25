@@ -1,3 +1,5 @@
+"""Preprocess EUVS time-series data for model features."""
+
 from config import Config
 import pandas as pd 
 import json 
@@ -5,7 +7,7 @@ import os
 import numpy as np
 
 class UvPreprocessor:
-    def __init__(self, conf): # Corretto da init a init
+    def __init__(self, conf):
         self.conf = conf
 
     def preprocess_uv(self):
@@ -15,10 +17,10 @@ class UvPreprocessor:
             raw_data = json.load(f)
         df = pd.DataFrame(raw_data)
         
-        # Convertiamo subito in datetime (usando UTC per evitare sfasamenti)
+        # Convert to timezone-aware datetime immediately.
         df["time_tag"] = pd.to_datetime(df["time_tag"], utc=True)
 
-        # Estrapolazione flags
+        # Expand nested flag fields into dedicated columns.
         flags_df = df["flags"].apply(pd.Series) 
         df = pd.concat([df.drop(columns=["flags"]), flags_df], axis=1)
 
@@ -56,5 +58,5 @@ class UvPreprocessor:
         # Sicurezza sui bordi (se il primissimo dato del dataset era rotto)
         df[colonne_euv] = df[colonne_euv].bfill()
 
-        print("->Uv Preprocessing Complete")
+        print("-> UV preprocessing complete")
         return df

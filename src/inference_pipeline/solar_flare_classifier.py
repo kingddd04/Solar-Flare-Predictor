@@ -1,3 +1,5 @@
+"""Map predicted X-ray flux values to NOAA solar flare classes."""
+
 class SolarFlareClassifier:
     """
     Utility class for converting raw X-ray flux values (W/m^2)
