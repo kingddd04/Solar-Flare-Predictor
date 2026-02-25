@@ -4,22 +4,15 @@ import numpy as np
 
 
 class InferenceDatasetExtractor:
+    """Extract the last 180 feature rows for inference."""
 
     def __init__(self, csv_path):
+        """Store dataset path and excluded columns."""
         self.csv_path = csv_path
-        self.DROP_COLS  = ["time_tag","0.1-0.8nm"]
+        self.DROP_COLS = ["time_tag", "0.1-0.8nm"]
 
     def create_inference_set(self):
-        """
-        Loads the CSV file and returns the last 180 rows of feature data.
-        This is the minimal dataset required for inference.
-
-        Returns
-        -------
-        np.ndarray
-            Array of shape (180, n_features) containing the last 180
-            feature samples from the dataset.
-        """
+        """Return last 180 feature samples from the dataset."""
         if not os.path.isfile(self.csv_path):
             raise FileNotFoundError(f"CSV not found: {self.csv_path}")
 
@@ -27,9 +20,9 @@ class InferenceDatasetExtractor:
 
         # Select feature columns
         feature_cols = [c for c in df.columns if c not in self.DROP_COLS]
-
         X = df[feature_cols].values.astype(np.float32)
 
+        # Ensure enough rows
         if len(X) < 180:
             raise ValueError(
                 f"Dataset too small: requires at least 180 rows, found {len(X)}"
