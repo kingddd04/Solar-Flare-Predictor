@@ -19,7 +19,7 @@ class TrainSetCreator:
     """
 
     # Colonne da escludere dalle feature
-    DROP_COLS  = ["time_tag"]
+    DROP_COLS  = ["time_tag", "0.1-0.8nm"]
     TARGET_COL = "0.1-0.8nm"
 
     WINDOW  = 180   # lunghezza sequenza di input (minuti)

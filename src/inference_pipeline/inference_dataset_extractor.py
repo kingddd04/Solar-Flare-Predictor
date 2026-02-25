@@ -7,7 +7,7 @@ class InferenceDatasetExtractor:
 
     def __init__(self, csv_path):
         self.csv_path = csv_path
-        self.DROP_COLS  = ["time_tag"]#"0.1-0.8nm"
+        self.DROP_COLS  = ["time_tag","0.1-0.8nm"]
 
     def create_inference_set(self):
         """
