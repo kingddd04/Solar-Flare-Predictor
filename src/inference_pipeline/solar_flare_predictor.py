@@ -10,7 +10,7 @@ class SolarFlarePredictor:
     Gestisce l'intero ciclo di vita del modello: costruzione, training, salvataggio e inferenza.
     """
     
-    def __init__(self, window_size=120, n_features=11, learning_rate=0.001, model_save_folder=None):
+    def __init__(self, window_size=180, n_features=11, learning_rate=0.001, model_save_folder=None):
         """
         Inizializza i parametri base. Il modello non è ancora costruito.
         """
@@ -64,7 +64,6 @@ class SolarFlarePredictor:
         if self.model is None:
             raise ValueError("Errore: Carica o addestra un modello prima di prevedere.")
                     
-        # 1. La rete neurale fa la previsione (sputerà un numero tra 0 e 1)
         scaled_prediction = self.model.predict(X_recent_window)
                 
                 

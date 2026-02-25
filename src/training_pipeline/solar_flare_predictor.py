@@ -10,7 +10,7 @@ class SolarFlarePredictor:
     Gestisce l'intero ciclo di vita del modello: costruzione, training, salvataggio e inferenza.
     """
     
-    def __init__(self, window_size=120, n_features=11, learning_rate=0.001, model_save_folder=None):
+    def __init__(self, window_size=180, n_features=11, learning_rate=0.001, model_save_folder=None):
         """
         Inizializza i parametri base. Il modello non è ancora costruito.
         """

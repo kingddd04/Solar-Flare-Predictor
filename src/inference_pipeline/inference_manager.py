@@ -20,7 +20,7 @@ class Inference_Manager:
         inf_scaler = InferenceScaler()
         inf_scaler.load(model_d)
         scaled_x = inf_scaler.scale_inference_label(x_imput)
-        scaled_x_batched = scaled_x[np.newaxis, ...]  # (1, 120, n_features)
+        scaled_x_batched = scaled_x[np.newaxis, ...]
 
 
         predicted_y = sfp.predict_weather(scaled_x_batched)

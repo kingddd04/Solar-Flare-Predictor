@@ -51,27 +51,21 @@ class TrainSetCreator:
 
         df = pd.read_csv(self.csv_path)
 
-        # Feature matrix: tutte le colonne tranne time_tag ed euv_is_missing
         feature_cols = [c for c in df.columns if c not in self.DROP_COLS]
         X = df[feature_cols].values.astype(np.float32)    # (N, n_features)
         y = df[self.TARGET_COL].values.astype(np.float32) # (N,)
 
-        n_samples = len(df) - self.WINDOW - self.HORIZON + 1
+        n_samples = len(df) - self.WINDOW - self.HORIZON
 
         for i in range(n_samples):
-            # Finestra di input: righe [i : i+WINDOW], tutte le feature
-            x_window = X[i : i + self.WINDOW]             # (180, n_features)
 
-            # Target: valore 0.1-0.8nm a 90 minuti dall'inizio della finestra
-            target_idx = i + self.HORIZON                  # minuto i+90
-            y_val      = y[target_idx]                     # scalar
+            x_window = X[i : i + self.WINDOW]           
+            target_idx = i + self.WINDOW + self.HORIZON   
+            y_val      = y[target_idx]                    
 
-            self.x.append(x_window)              # invece di x_window[np.newaxis, ...]
-            self.y.append(np.array(y_val))       # invece di array([[y_val]])
-        self.x = np.array(self.x)   # (N, 180, n_features)
-        self.y = np.array(self.y)   # (N,)
+            self.x.append(x_window)             
+            self.y.append(np.array(y_val))       
+        self.x = np.array(self.x)  
+        self.y = np.array(self.y) 
 
-
-
-        
         return self.x, self.y
