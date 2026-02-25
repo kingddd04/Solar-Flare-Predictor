@@ -46,7 +46,9 @@ class PreprocesserManager:
             print("Dataset found; updating records")
             old_df = pd.read_csv(dataset_path, index_col="time_tag", parse_dates=["time_tag"])
 
-            combined = old_df.merge(new_datas, on="time_tag", how="outer")
+            combined = pd.concat([old_df, new_datas])
+            combined = combined[~combined.index.duplicated(keep="last")]
+            combined.sort_index(inplace=True)
 
             combined.to_csv(dataset_path, index=True)
 
