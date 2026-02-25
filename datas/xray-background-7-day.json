@@ -1,10 +1,5 @@
 [
     {
-        "time_tag": "2026-02-09T00:00:00Z",
-        "satellite": 18,
-        "background": 1.7613829707367281e-06
-    },
-    {
         "time_tag": "2026-02-10T00:00:00Z",
         "satellite": 18,
         "background": 1.1558242363207683e-06
@@ -28,5 +23,10 @@
         "time_tag": "2026-02-14T00:00:00Z",
         "satellite": 18,
         "background": 4.4516328117083505e-07
+    },
+    {
+        "time_tag": "2026-02-15T00:00:00Z",
+        "satellite": 18,
+        "background": 3.746156991724092e-07
     }
 ]
