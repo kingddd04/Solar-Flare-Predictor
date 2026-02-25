@@ -16,7 +16,7 @@ class InferenceScaler:
     def __init__(self):
         self.x_scaler = MinMaxScaler(feature_range=(0, 1))
         self.y_scaler = MinMaxScaler(feature_range=(0, 1))
-        self.is_fitted = False  # Safety flag to prevent accidental use
+        self.is_fitted = False  # Track scaler state
 
 
     def scale_inference_label(self, X_data, y_data=None, apply_log10_target=True):
@@ -50,12 +50,12 @@ class InferenceScaler:
                 "Call fit_and_scale_train() or load() before using this method."
             )
 
-        print("-> [Test/Live] Applying scaling...")
+        print("[Test/Live] Applying scaling")
 
-        # --- Scale X -------------------------------------------------------
+        # Prepare feature scaling
         original_shape = X_data.shape
 
-        # Flatten only if input is 3D (e.g., sequences)
+        # Flatten 3D feature input
         if X_data.ndim == 3:
             X_flat = X_data.reshape(-1, X_data.shape[-1])
         else:
@@ -63,7 +63,7 @@ class InferenceScaler:
 
         X_scaled_flat = self.x_scaler.transform(X_flat)
 
-        # Restore original shape if needed
+        # Restore original feature shape
         X_scaled = (
             X_scaled_flat.reshape(original_shape)
             if X_data.ndim == 3
@@ -119,4 +119,4 @@ class InferenceScaler:
         self.y_scaler = joblib.load(path_y)
         self.is_fitted = True
 
-        print("-> Scalers successfully loaded into memory.")
+        print("Scaler files loaded successfully")

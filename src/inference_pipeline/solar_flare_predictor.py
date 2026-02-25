@@ -6,26 +6,26 @@ import os
 
 class SolarFlarePredictor:
     """
-    Classe wrapper per il modello LSTM di previsione dei brillamenti solari.
-    Gestisce l'intero ciclo di vita del modello: costruzione, training, salvataggio e inferenza.
+    Wrap the LSTM solar flare model.
+    Handle model build, load, and prediction steps.
     """
     
     def __init__(self, window_size=180, n_features=11, learning_rate=0.001, model_save_folder=None):
         """
-        Inizializza i parametri base. Il modello non è ancora costruito.
+        Initialize model settings.
         """
         self.window_size = window_size
         self.n_features = n_features
         self.learning_rate = learning_rate
         self.model_save_folder = model_save_folder
         
-        # Ecco il tuo modello come attributo della classe (inizialmente vuoto)
+        # Initialize model attribute
         self.model = None 
         self.build_model()
 
     def build_model(self):
-        """Costruisce e compila l'architettura della Rete Neurale."""
-        print("-> Costruzione architettura LSTM in corso...")
+        """Build and compile the LSTM model."""
+        print("Building LSTM model architecture")
         
         self.model = Sequential([
             Input(shape=(self.window_size, self.n_features)),
@@ -39,15 +39,15 @@ class SolarFlarePredictor:
         
         optimizer = Adam(learning_rate=self.learning_rate)
         self.model.compile(optimizer=optimizer, loss='mse', metrics=['mae'])
-        print("-> Modello compilato con successo!")
+        print("Model compilation complete")
 
     def load(self):
-        """Carica un modello pre-addestrato dal disco."""
+        """Load a trained model from disk."""
         if os.path.exists(self.model_save_folder):
             self.model = load_model(self.model_save_folder)
-            print(f"-> Modello {self.model_save_folder} caricato con successo. Pronto per le previsioni!")
+            print(f"Loaded model from {self.model_save_folder}")
             
-            # Aggiorniamo le dimensioni lette dal modello caricato
+            # Update input dimensions
             self.window_size = self.model.input_shape[1]
             self.n_features = self.model.input_shape[2]
         else:
@@ -55,9 +55,8 @@ class SolarFlarePredictor:
 
     def predict_weather(self, X_recent_window):
         """
-        Fa l'inferenza (previsione) sui nuovi dati e decodifica il risultato.
-        X_recent_window: Array Numpy di forma (1, 120, 7) con gli ultimi dati al minuto.
-        target_scaler: L'oggetto MinMaxScaler usato durante il preprocessing per la Y.
+        Run inference on recent data.
+        X_recent_window should contain the latest input window.
         """
 
 
@@ -69,4 +68,3 @@ class SolarFlarePredictor:
                 
         return scaled_prediction
     
-

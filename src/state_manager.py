@@ -20,7 +20,7 @@ class State_Manager:
             } 
         with open(self.state_filepath, "w") as f: 
             json.dump(state, f)
-        print("State saved to : ", self.state_filepath)
+        print("Saved state file:", self.state_filepath)
 
 
 s = State_Manager()
@@ -28,4 +28,3 @@ s.save_state()
 
 
         
-
