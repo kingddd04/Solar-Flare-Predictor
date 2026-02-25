@@ -43,9 +43,7 @@ class SolarFlarePredictor:
 
     def train(self, X_train, y_train, X_test, y_test, epochs=10, batch_size=64):
         """Train the model and save the best checkpoint."""
-        if self.model is None:
-            raise ValueError("Errore: Devi chiamare build_model() prima di fare il training!")
-            
+
         print("\n=== TRAINING START ===")
         
         early_stop = EarlyStopping(monitor='val_loss', patience=10, restore_best_weights=True)
@@ -82,17 +80,13 @@ class SolarFlarePredictor:
             self.window_size = self.model.input_shape[1]
             self.n_features = self.model.input_shape[2]
         else:
-            raise FileNotFoundError(f"Errore: Il file {self.model_save_folder} non esiste.")
+            raise FileNotFoundError(f"Error: the file {self.model_save_folder} does not exists.")
 
     def predict_next_flare(self, X_recent_window, target_scaler):
         """
         Predict next flare flux from recent data and decode the value.
         """
 
-
-        if self.model is None:
-            raise ValueError("Errore: Carica o addestra un modello prima di prevedere.")
-                    
         # Run model prediction
         scaled_prediction = self.model.predict(X_recent_window)
                 

@@ -30,6 +30,8 @@ class Xray_preprocessor:
             values="observed_flux"
         )
 
+        df = df.interpolate(method="linear", axis=0, limit=12, limit_direction="both")
+
         print("X-ray preprocessing complete")
 
         return df

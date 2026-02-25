@@ -51,7 +51,7 @@ class SolarFlarePredictor:
             self.window_size = self.model.input_shape[1]
             self.n_features = self.model.input_shape[2]
         else:
-            raise FileNotFoundError(f"Errore: Il file {self.model_save_folder} non esiste.")
+            raise FileNotFoundError(f"Error: The file {self.model_save_folder} does not exists.")
 
     def predict_weather(self, X_recent_window):
         """
@@ -61,7 +61,7 @@ class SolarFlarePredictor:
 
 
         if self.model is None:
-            raise ValueError("Errore: Carica o addestra un modello prima di prevedere.")
+            raise ValueError("Error you must load a model before predicting.")
                     
         scaled_prediction = self.model.predict(X_recent_window)
                 
