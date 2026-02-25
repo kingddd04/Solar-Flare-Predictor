@@ -83,21 +83,30 @@ class SolarFlarePredictor:
         else:
             raise FileNotFoundError(f"Errore: Il file {filepath} non esiste.")
 
-    def predict_next_flare(self, X_recent_window, target_scaler):
+    def predict_next_flare(self, X_recent_window, feature_scaler, target_scaler):
         """
         Fa l'inferenza (previsione) sui nuovi dati e decodifica il risultato.
-        X_recent_window: Array Numpy di forma (1, 120, 7) con gli ultimi dati al minuto.
-        target_scaler: L'oggetto MinMaxScaler usato durante il preprocessing per la Y.
+        X_recent_window: Array Numpy di forma (1, 120, 7) con gli ultimi dati NON scalati.
+        feature_scaler: L'oggetto MinMaxScaler fittato durante il training per le feature (X).
+                        Deve essere lo STESSO scaler usato in fase di training per evitare
+                        data leakage e inconsistenze.
+        target_scaler: L'oggetto MinMaxScaler fittato durante il training per la Y.
         """
-
 
         if self.model is None:
             raise ValueError("Errore: Carica o addestra un modello prima di prevedere.")
-                    
-        # 1. La rete neurale fa la previsione (sputerà un numero tra 0 e 1)
-        scaled_prediction = self.model.predict(X_recent_window)
-                
-        # 2. Usiamo lo scaler per riportare il numero alla scala fisica reale (es. 1.5e-5)
+
+        # 1. Scaliamo l'input con il feature_scaler fittato in fase di training.
+        #    Reshape da (1, window, features) a (window, features), scala, e ripristina.
+        original_shape = X_recent_window.shape
+        X_2d = X_recent_window.reshape(-1, original_shape[-1])
+        X_scaled_2d = feature_scaler.transform(X_2d)
+        X_scaled = X_scaled_2d.reshape(original_shape)
+
+        # 2. La rete neurale fa la previsione (sputerà un numero tra 0 e 1)
+        scaled_prediction = self.model.predict(X_scaled)
+
+        # 3. Usiamo lo scaler per riportare il numero alla scala fisica reale (es. 1.5e-5)
         real_xray_flux = target_scaler.inverse_transform(scaled_prediction)
-                
+
         return real_xray_flux[0][0]

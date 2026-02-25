@@ -54,7 +54,10 @@ class UvPreprocessor:
         df[colonne_euv] = df[colonne_euv].ffill()
 
         # Sicurezza sui bordi (se il primissimo dato del dataset era rotto)
-        df[colonne_euv] = df[colonne_euv].bfill()
+        # Usiamo fillna(0) anziché bfill() per evitare data leakage temporale:
+        # bfill() userebbe valori futuri per riempire i NaN iniziali,
+        # introducendo informazioni dal futuro nel passato.
+        df[colonne_euv] = df[colonne_euv].fillna(0)
 
         print("->Uv Preprocessing Complete")
         return df
