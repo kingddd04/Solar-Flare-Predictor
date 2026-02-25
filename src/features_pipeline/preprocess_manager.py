@@ -42,7 +42,6 @@ class PreprocesserManager:
         """
         dataset_path = os.path.join(self.conf.data_dir, self.conf.dataset_name)
 
-        # If dataset exists, load it and append new data
         if os.path.isfile(dataset_path):
             print("Dataset found — updating it")
             old_df = pd.read_csv(dataset_path, index_col="time_tag", parse_dates=["time_tag"])
