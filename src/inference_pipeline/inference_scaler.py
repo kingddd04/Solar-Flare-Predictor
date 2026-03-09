@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 import joblib
 import os
+import warnings
 
 
 class InferenceScaler:
@@ -19,7 +20,7 @@ class InferenceScaler:
         arr = np.asarray(arr, dtype=np.float64)
         return np.nan_to_num(arr, nan=0.0, posinf=1e10, neginf=-1e10)
 
-    def scale_inference_label(self, X_data, y_data=None, apply_log10_target=True):
+    def scale_inference_features(self, X_data):
         """Scale inference features using fitted scalers."""
         if not self.is_fitted:
             raise ValueError(
@@ -53,7 +54,17 @@ class InferenceScaler:
 
         return X_scaled
 
-    def decode_prediction(self, scaled_prediction, applied_log10=None):
+    def scale_inference_label(self, X_data):
+        """Backward-compatible alias for scale_inference_features."""
+        warnings.warn(
+            "scale_inference_label is deprecated, "
+            "use scale_inference_features instead.",
+            DeprecationWarning,
+            stacklevel=2,
+        )
+        return self.scale_inference_features(X_data)
+
+    def decode_prediction(self, scaled_prediction, applied_log10=True):
         """Inverse-transform model output back to physical units."""
         if not self.is_fitted:
             raise ValueError("Scalers are not initialized or loaded.")
@@ -62,8 +73,6 @@ class InferenceScaler:
         log_flux = self.y_scaler.inverse_transform(scaled_prediction)
 
         # Undo log10 if applied
-        if applied_log10 is None:
-            applied_log10 = self.apply_log10_target
         return 10 ** log_flux if applied_log10 else log_flux
 
     def load(self, folder_path):
