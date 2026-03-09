@@ -44,8 +44,8 @@ class Xray_preprocessor:
         df["is_missing"] = df.isna().any(axis=1).astype(int)
 
         # 8. Fill missing values
-        df = df.ffill().bfill()
-        df = df.infer_objects(copy=False)
+        pd.set_option('future.no_silent_downcasting', False)
+        df = df.ffill().bfill().infer_objects(copy=False)
 
         # 9. Rename columns
         df.columns = [f"xray_{col}" for col in df.columns]

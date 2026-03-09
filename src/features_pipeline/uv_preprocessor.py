@@ -36,7 +36,9 @@ class UvPreprocessor:
         df["euv_is_missing"] = df.isna().all(axis=1).astype(int)
 
         # Forward/backward fill
-        df = df.ffill().bfill()
+        pd.set_option('future.no_silent_downcasting', False)
+
+        df = df.ffill().bfill().infer_objects(copy=False)
 
         df.index = pd.to_datetime(df.index, utc=True)
 
