@@ -17,6 +17,7 @@ class TrainingScaler:
         self.x_scaler = MinMaxScaler(feature_range=feature_range)
         self.y_scaler = MinMaxScaler(feature_range=feature_range)
         self.eps = eps
+        self.apply_log10_target = True
         self.is_fitted = False
 
     # ---------------------------------------------------------
@@ -53,6 +54,7 @@ class TrainingScaler:
     # ---------------------------------------------------------
     def fit_and_scale_train(self, X_train, y_train, apply_log10_target=True):
         print("[Train] Starting fit and scaling")
+        self.apply_log10_target = apply_log10_target
 
         # Sanitize
         X_train = self._sanitize(X_train)
@@ -122,10 +124,34 @@ class TrainingScaler:
         os.makedirs(folder_path, exist_ok=True)
         joblib.dump(self.x_scaler, os.path.join(folder_path, "solar_x_scaler.pkl"))
         joblib.dump(self.y_scaler, os.path.join(folder_path, "solar_y_scaler.pkl"))
+        joblib.dump(
+            {
+                "eps": self.eps,
+                "apply_log10_target": self.apply_log10_target,
+            },
+            os.path.join(folder_path, "solar_scaler_meta.pkl"),
+        )
         print(f"Saved scaler files to: {folder_path}")
 
     def load(self, folder_path):
-        self.x_scaler = joblib.load(os.path.join(folder_path, "solar_x_scaler.pkl"))
-        self.y_scaler = joblib.load(os.path.join(folder_path, "solar_y_scaler.pkl"))
+        x_path = os.path.join(folder_path, "solar_x_scaler.pkl")
+        y_path = os.path.join(folder_path, "solar_y_scaler.pkl")
+        meta_path = os.path.join(folder_path, "solar_scaler_meta.pkl")
+
+        if not os.path.exists(x_path) or not os.path.exists(y_path):
+            raise FileNotFoundError(
+                "Scaler files not found. Expected: "
+                "'solar_x_scaler.pkl' and 'solar_y_scaler.pkl'."
+            )
+
+        self.x_scaler = joblib.load(x_path)
+        self.y_scaler = joblib.load(y_path)
+        if os.path.exists(meta_path):
+            metadata = joblib.load(meta_path)
+            self.eps = metadata.get("eps", self.eps)
+            self.apply_log10_target = metadata.get(
+                "apply_log10_target",
+                self.apply_log10_target,
+            )
         self.is_fitted = True
         print(f"Loaded scalers from: {folder_path}")

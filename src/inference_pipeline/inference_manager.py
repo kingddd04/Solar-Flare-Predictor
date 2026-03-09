@@ -28,7 +28,7 @@ class Inference_Manager:
         # Load scalers and scale input
         scaler = InferenceScaler()
         scaler.load(model_dir)
-        x_scaled = scaler.scale_inference_label(x_input)
+        x_scaled = scaler.scale_inference_features(x_input)
 
         # Add batch dimension: (1, 180, n_features)
         x_scaled_batched = x_scaled[np.newaxis, ...]
@@ -37,7 +37,10 @@ class Inference_Manager:
         y_scaled_pred = predictor.predict_weather(x_scaled_batched)
 
         # Decode prediction back to real flux
-        y_real = scaler.decode_prediction(y_scaled_pred)
+        y_real = scaler.decode_prediction(
+            y_scaled_pred,
+            applied_log10=scaler.apply_log10_target,
+        )
 
         # Convert flux to NOAA class
         flare_class = SolarFlareClassifier.get_flare_class(y_real)
