@@ -1,4 +1,4 @@
-# Solar Flare Predictor ☀️
+# Solar Flare Predictor ☀️(further documentation can be found in docs folder)
 
 A simple machine learning project that predicts **solar flare class** from recent space weather data.
 
